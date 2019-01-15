@@ -276,7 +276,7 @@ layer {
  }
 ```
 
-THe Convolution layers should be changed as following:
+The Convolution layers should be changed as following:
 
 ```
 
@@ -360,19 +360,25 @@ Layer characteristics
    
   Example:
   
-  ```$ ./imagenet-console orange_0.jpg output_0.jpg ```
+  ```$ ./imagenet-console orange_0.jpg output_0.jpg
+  ```
   
   NOTE: After building make sure the terminal is located in the aarch64/bin directoy
   
-  ``` $ cd jetson-inference/build/aarch64/bin ```
-  
+  ``` $ cd jetson-inference/build/aarch64/bin 
+  ```
   
   6. Classifying Live Video Feed from the Jetson onboard camera with imageNet.
     1. Navigate to real time image recognition demo in the */aarch64/bin called imagenet-camera
-    2. Chose one of the following ```$ ./imagenet-camera googlenet           # to run using googlenet
-                                  ```$ ./imagenet-camera alexnet             # to run using alexnet ```
-
+    2. Chose one of the following 
+    
+    ```
+       $ ./imagenet-camera googlenet   # to run using googlenet
+       $ ./imagenet-camera alexnet     # to run using alexnet   
+    ```
+  Note: By default the application can recognize up to 1000 different types of objects, since Googlenet and Alexnet are trained on the ILSVRC12 ImageNet database which contains 1000 classes of objects. The mapping of names for the 1000 types of objects, you can find included in the repo under https://classroom.udacity.com/nanodegrees/nd209/parts/dad7b7cc-9cce-4be4-876e-30935216c8fa/modules/4899a747-7c0d-4f40-9ab8-4f2eaf27a810/lessons/320f676e-0cae-4f44-80cc-5291cb2f673b/concepts/data/networks/ilsvrc12_synset_words.txt
   
+ 
   
   
   
