@@ -11,6 +11,10 @@ UCI: https://archive.ics.uci.edu/ml/datasets.html
 [image3]: inference 
 [image4]: training_graph2
 [image5]: newClassModel
+[image6]: metricsTable
+[image7]: speedvsaccuracy
+[image8]: tx1vstx2
+[image9]: sw_upgrades
 
 Inference development 
 --
@@ -380,26 +384,128 @@ Layer characteristics
   
  
   
-  
-  
-  
-  
-  
-  
-  
-
 # 5. Deploying models
 
 # 6. Lab: Nvidia Development 
 
+# Inferencing applications in robotics
+
+1.Embedded Examples
+--
+
+Question: Why is inference speed and AI at the edge so important?
+
+There are many use cases where systems cannot rely on clouds to solve problems. 
+
+Example 1: AI Cities - Use Intelligent Video Analytics (IVA) to sense and make intelligent decisions with no physical interaction. They usually have large bandwidths the amount of data generated are vast. Therefore the network cannot handle all the data alone. 
+
+Inferencing in IVA
+
+Inference is used to analyze a live camera feed to provide many powerful insights about the city.
+
+1. Parking spot location
+2. Security Analysis 
+3. Behavioral analysis
+
+
+Example 2: Privacy - Data security is very important to some companies because the privacy of indiduvals need to be protected.
 
 
 
+Latency is a time delay between an input event being applied to the system, and the associated output action from the system. In robotics there are devices that support satefy critical services and need to make millisecond decisions very quickly. 
+
+Connectivity - For applications in remote areas where robots and UAV's are ideally suited, network coverage may be weak or non-existent or even slower using 2G or satellite communications. If connection is not always available, relying on a cloud is less than ideal.
+
+Other Latency factors - Keeping track of how long it takes to react to incoming data is always a consideration in real-time systems.
+
+1. Complexity of the Model
+2. Available memory 
+3. Computational loads
 
 
 
+2 Metrics for Inference Deployment
+---
+
+1. Analysis of DNN's using additional computation metrics provide insight into design constraints in deployable systems that use DNN's for inference. Architertures can be compared using the following metrics
+
+* Top1 Accuracy 
+* Operations count
+* Network Parameters Count
+* Inference Time 
+* Power Consumption 
+* Memory Usage 
+
+![alt text][image6] 
+
+Key Insights for optimizing a deployable robotic system using inference from Canziani's paper:
+
+* Power consumption is independent of batch size and architecture
+“When full resources utilisation is reached, generally with larger batch sizes, all networks consume roughly an additional 11.8W”
+* Accuracy and inference time are in a hyperbolic relationship
+“a little increment in accuracy costs a lot of computational time”
+* Energy constraint is an upper bound on the maximum achievable accuracy and model complexity
+“if energy consumption is one of our concerns, for example for battery-powered devices, one can simply choose the slowest architecture which satisfies the application minimum requirements”
+* The number of operations is a reliable estimate of the inference time.
+
+
+3. Speed/accuracy Tradeoff
+
+Two conclusions are helpful when considering the speed and accuracy tradeoff for a robotic system design that uses DNN inference on a deployed platform:
+
+* Accuracy and inference time are in a hyperbolic relationship
+* The number of operations is a reliable estimate of the inference time.
+
+If the system is supposed to be able to classify images that are included in the 1000 classes from ImageNet, then all that is needed is to benchmark some of the inference times on the target system, and choose the network that best meets the constraints of inference time or accuracy required. 
+
+Example: The following chart characterizes inference speed vs accuracy 
+![alt text][image7]
+
+The system requires an accuracy of at least 80%, the best fps we can hope for is about 10 fps as an upper bound. If that is acceptable, the system can be built using a known architecture trained on ImageNet
+
+If 10 fps @ 80% accuracy isn't good enough, other options are available that may satisfy the contraints without redesigning a new network architecture:
+
+* Redeploy to a higher performance hardware platform with improved operation execution time
+* Upgrade the software platform with an optimized release that affects inference time
+* Increase the accuracies by customizing the data to a smaller number of relevant classifications
+
+Improved Hardware Platforms
+---
+
+![alt text][image8]
+
+
+Improved Software Platform
+---
+
+For times where upgrading hardware is not an option, changes in software platforms that leverage optimizations can have the same ammount of impact.
+
+![alt text][image9]
+
+Customized Data
+---
+
+So far, the improvements discussed have all been explained in terms of the benchmarks using famous architectures such as AlexNet, GoogLeNet, and ResNet, running the ImageNet classification set of 1000 image classes. That’s just a benchmark, though. These same architectures can be used with alternate data sets, possibly with better accuracy. For example, the ImageNet data set includes 122 different dog breeds among its labels. If it only matters for an application that the image is a “dog”, not which breed of dog, these images could be trained as a single class, and all the inaccuracies that might occur between categories would no longer cause errors.
+
+Perhaps the application really is only concerned with picking items off of a conveyor belt and there are only 20 categories, but speed is a very important metric. In that case, the 20 classes could be trained (using an appropriately robust user data set), and a smaller, faster architecture such as AlexNet might provide a sufficient accuracy metric with the smaller number of classes.
+
+These are all considerations that can be taken into account to inform the design process for a deployable system. In the end though, experimentation is still necessary to determine actual results and best optimizations.
+
+Project: Robotic Inference 
+---
 
 DIGITS WORKFLOW 
+
+Steps:
+
+1. Start DIGITS server by entering the command ```digits``` into a terminal 
+2. From another terminal run ```print_connection.sh``` to get the link for the DIGITS GUI. Keep this script running to keep the workspace active if a network is being trained. 
+3. Add dataset into DIGITS (/data/P1_data
+4. Choose a training model 
+5. Test the trained model by running the ``` evaluate``` in another terminal with the DIGITS server still running (only after the model is done being trained). The job id will be requested
+6. 
+
+``evaluate`` checks the inference speed of your model for a single imput averaged over ten attempts for 5 runs. 
 
 PROJECT IDEA 
 
