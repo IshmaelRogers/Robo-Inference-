@@ -508,8 +508,107 @@ Steps:
 ``evaluate`` checks the inference speed of your model for a single imput averaged over ten attempts for 5 runs. 
 
 PROJECT IDEA 
+---
+Preception, Decision Making, Action
 
-DATA COLLECTION 
+
+Project guidelines:
+In addition to training a network on the supplied data, you will also need to choose and train a network using your own collected data. At a minimum, it needs to be a classification network with at least 3 classes. However, if you would like to be more adventurous you can use more than 3 classes and even subclasses!
+
+If you are looking for an extra challenge, you can create a detection network. It will require you to annotate your data in addition to collecting it. More information can be found in the next section on this process.
+
+Its okay to use a sample idea below if you’re having a hard time deciding what to do!
+
+Resources and ideas:
+
+* Pill identifier with classes: (pill a, pill b, pill c, no pill)
+* Defective item vs normal item with classes: (no item, defective item, normal item)
+* Person vs no person with classes: (correct person, wrong person, no person)
+* Location of robot part on a workbench.
+* Insert your idea here!
+
+DATA COLLECTION
+---
+
+Workspace home directory ```/home/workspaces/```
+
+Check the directory size with the following command 
+
+```
+$ du -sh /home/workspace
+
+```
+
+1. Classification Network - requires 400 images per class. 
+NOTE: Collect images in the same environment in which you will be conducting your inference. 
+2. Detection Network - data needs to be annotated before uploading to DIGITS. More specifically, bounding boxes need to be placed around what we want the network to learn. [image annotation][https://en.wikipedia.org/wiki/List_of_manual_image_annotation_tools]
+
+Collecting the images
+----
+
+Images can be collected using a webcam and a Python or C++ script, phones or the jetson. Below is a basic python script for collecting images from a webcam 
+
+# Python Data Capture Script
+NOTE: Setup the proper environment with Python 2.7 using cv2: ```conda instal -c confa-forge opencv=2.4 ```
+
+``` python
+
+import cv2
+
+# Run this script from the same directory as your Data folder
+
+# Grab your webcam on local machine
+cap = cv2.VideoCapture(0)
+
+# Give image a name type
+name_type = 'Small_cat'
+
+# Initialize photo count
+number = 0
+
+# Specify the name of the directory that has been premade and be sure that it's the name of your class
+# Remember this directory name serves as your datas label for that particular class
+set_dir = 'Cat'
+
+print ("Photo capture enabled! Press esc to take photos!")
+
+while True:
+    # Read in single frame from webcam
+    ret, frame = cap.read()
+
+    # Use this line locally to display the current frame
+    cv2.imshow('Color Picture', frame)
+
+    # Use esc to take photos when you're ready
+    if cv2.waitKey(1) & 0xFF == 27:
+
+        # If you want them gray
+        #gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+
+        # If you want to resize the image
+        # gray_resize = cv2.resize(gray,(360,360), interpolation = cv2.INTER_NEAREST)
+
+        # Save the image
+        cv2.imwrite('Data/' + set_dir + '/' + name_type + "_" + str(number) + ".png", frame)
+
+        print ("Saving image number: " + str(number))
+
+        number+=1
+
+    # Press q to quit the program
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+
+
+
+
+
+
 
 DOCUMENTATION 
 
