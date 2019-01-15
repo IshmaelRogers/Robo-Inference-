@@ -603,16 +603,127 @@ cap.release()
 cv2.destroyAllWindows()
 ```
 
+# C++ script using the Jetson
+
+``` cpp
+
+/*
+Compile with:
+
+gcc -std=c++11 Camera_Grab.cpp -o picture_grabber -L/usr/lib -lstdc++ -lopencv_core -lopencv_highgui -lopencv_videoio -lopencv_imgproc -lopencv_imgcodecs
+
+Requires recompiling OpenCV with gstreamer plug in on. See: https://github.com/jetsonhacks/buildOpenCVTX2
+
+Credit to Peter Moran for base code.
+http://petermoran.org/csi-cameras-on-tx2/
+*/
 
 
+#include <opencv2/opencv.hpp>
+#include <string>
+
+using namespace cv;
+using namespace std;
+
+std::string get_tegra_pipeline(int width, int height, int fps) {
+    return "nvcamerasrc ! video/x-raw(memory:NVMM), width=(int)" + std::to_string(width) + ", height=(int)" +
+           std::to_string(height) + ", format=(string)I420, framerate=(fraction)" + std::to_string(fps) +
+           "/1 ! nvvidconv flip-method=0 ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink";
+}
+
+int main() {
+    // Options
+    int WIDTH = 500;
+    int HEIGHT = 500;
+    int FPS = 30;
+
+    // Directory name
+    string set_dir = "Test";
+    // Image base name
+    string name_type = "test";
+
+    int count = 0;
+
+    // Define the gstream pipeline
+    std::string pipeline = get_tegra_pipeline(WIDTH, HEIGHT, FPS);
+    std::cout << "Using pipeline: \n\t" << pipeline << "\n";
+
+    // Create OpenCV capture object, ensure it works.
+    cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
+    if (!cap.isOpened()) {
+        std::cout << "Connection failed";
+        return -1;
+    }
+
+    // View video
+    cv::Mat frame;
+    while (1) {
+        cap >> frame;  // Get a new frame from camera
+
+        // Display frame
+        imshow("Display window", frame);
+
+        // Press the esc to take picture or hold it down to really take a lot!
+        if (cv::waitKey(1) % 256 == 27){
+
+            string string_num = to_string(count);
+
+            cout << "Now saving: " << string_num << endl;
+
+            string save_location = "./" + set_dir + "/" + name_type + "_" + string_num + ".png";
+
+            cout << "Save location: " << save_location << endl;
+
+            imwrite(save_location, frame );
+
+            count+=1;
+
+        }
+
+        cv::waitKey(1);
+    }
+}
+
+```
 
 
+Documentation
 
+NOTE: Use LaTeX to create the report
 
+NOTE: All submissions have to be watermarked with first and last name. Images, tables, charts and graphs
 
-DOCUMENTATION 
+Abstract: A abstract is meant to be a summary of all of the relevant points in your presented work. It is designed to present a high-level overview of the report, providing just enough detail to convey the necessary information. The abstract may often mention a one-sentence summary of the results. While the type of voice chosen for the paper (active or passive) may be up for debate, you should avoid the use of “I” and “me” in the report. It usually is kept to a length of 150 - 200 words.
+
+Example: You should not write, “I present two different neural networks for classifying my data”. Instead, you should try to say, “ Two different neural networks are used for classification”.
+
+Introduction: The introduction should provide some material regarding the history of the problem, why it is important and what is intended to be achieved. If there exists any previous attempts to solve this problem, this is a great place to note these while conveying the differences in your approach (if any). The intent is to provide enough information for the reader to understand why this problem is interesting and set up the conversation for the solution you have provided.
+
+Use this space to introduce your robotic inference idea and how you wish to apply it. If you have any papers / sites you have referenced for your idea, please make sure to cite them.
+
+Background / Formulation: At this stage, you should begin diving into the technical details of your approach by explaining to the reader how parameters were defined, what type of network was chosen, and the reasons these items were performed. This should be factual and authoritative, meaning you should not use language such as “I think this will work” or “Maybe a network with this architecture is better..”. Instead, focus on items similar to, ”A 3-layer network architecture was chosen with X, Y, and Z parameters”
+
+Explain why you chose the network you did for the supplied data set and then why you chose the network used for your robotic inference project.
+
+Data Acquisition: This section should discuss the data set. Items to include are the number of images, size of the images, the types of images (RGB, Grayscale, etc.), how these images were collected (including the method). Providing this information is critical if anyone would like to replicate your results. After all, the intent of reports such as these is to convey information and build upon ideas so you want to ensure others can validate your process.
+
+Justifying why you gathered data in this way is a helpful point, but sometimes this may be omitted here if the problem has been stated clearly in the introduction. It is a great idea here to have at least one or two images showing what your data looks like for the reader to visualize.
+
+Results: This is typically the hardest part of the report for many. You want to convey your results in an unbiased fashion. If your results are good, you can objectively note this. Similarly, you may do this if they are bad as well. You do not want to justify your results here with discussion; this is a topic for the next session. Present the results of your robotics project model and the model you used for the supplied data with the appropriate accuracy and inference time.
+
+For demonstrating your results, it is incredibly useful to have some charts, tables, and/or graphs for the reader to review. This makes ingesting the information quicker and easier.
+
+Discussion: This is the only section of the report where you may include your opinion. However, make sure your opinion is based on facts. If your results are poor, make mention of what may be the underlying issues. If the results are good, why do you think this is the case? Again, avoid writing in the first person (i.e. Do not use words like “I” or “me”). If you really find yourself struggling to avoid the word “I” or “me”; sometimes, this can be avoided with the use of the word “one”. As an example: instead of, "I think the accuracy on my dataset is low because the images are too small to show the necessary detail" try, "one may believe the accuracy on the dataset is low because the images are too small to show the necessary detail". They say the same thing, but the second avoids the first person.
+
+Reflect on which is more important, inference time or accuracy, in regards to your robotic inference project.
+
+Conclusion / Future Work: This section is intended to summarize your report. Your summary should include a recap of the results, did this project achieve what you attempted, and is this a commercially viable product? For future work, address areas of work that you may not have addressed in your report as possible next steps. This could be due to time constraints, lack of currently developed methods / technology, and areas of application outside of your current implementation. Again, avoid the use of the first-person.
+
 
 DEPLOYING ON JETSON TX2
+
+
+
 
 WORKSPACE 
 
