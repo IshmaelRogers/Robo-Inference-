@@ -722,15 +722,63 @@ Conclusion / Future Work: This section is intended to summarize your report. You
 
 DEPLOYING ON JETSON TX2
 
+1. Download the model from DIGITS to the jetson
+  * Navifate in a browser on the Jetson to the DIGITS server. 
+  * Download the model 
+2. Create a folder on the system with a name for the model and extract the contents of the downloaded file into that folder with the ```tar -xzvf ``` command. 
+3. Create an environment variable called NET to the location of the model path
+  ``` export NET=/home/user/Desktop/my_model ``` into the terminal
+ 4. Navigate to the Jetson inference folder then into the executable binaries and launch imagenet or detect net like so
+   ```
+   ./imagenet-camera --prototxt=$NET/deploy.prototxt --model=$NET/your_model_name.caffemodel --labels=$NET/labels.txt --input_blob=data --output_blob=softmax
+   ```
+   
+   
+   #SPECIAL TOPIC: Actuation based on classifier data using imagenet or detectnet 
+   
+   To actuate based on the information from a classifier modify the C++ file accordingly!
+   
+   Here is an example of calling a servo action based on a classification result. It can be inserted into the code here at 
+   line 168:
+   
+   ```
+   std::string class_str(net->GetClassDesc(img_class));
 
+if("Bottle" == class_str){
+          cout << "Bottle" << endl;
+          // Invoke servo action
+}
 
+else if("Candy_Box" == class_str){
+         cout << "Candy_Box" << endl;
+         // Do not invoke servo action
+}
 
-WORKSPACE 
+else {
+         // Catch anything else here
+}
 
+```
+   
+WORKSPACE
 
-RECAP 
+See Udacity Nanodegree until I configure for the Jetson TX 2
 
 PROJECT
+
+1) Using the supplied data in the digits image, create a network that achieves at least 75 percent accuracy and an inference time of less than 10 ms. This can be done by running the evaluate command. Be sure to take a screenshot of the results and add the date and your name to the image.
+
+2) Determine what you want your robotic inference idea to be. Collect your own data that fits with what your model is trying to accomplish. Train a network that produces meaningful results.
+
+3) Document the project following the provided structure. Be sure to include and talk about both networks you worked on. You could use this [template][https://www.overleaf.com/read/ghypqqdcrjsv]
+
+When you have completed the steps above and have cross checked them to the rubric here, go ahead and submit your work!
+
+Be sure to include the following items in your project submission: 
+
+A write up in PDF format that addresses the rubric points. Be sure to include sample images of the items you are classifying, charts, graphs, etc.
+A photo of your terminal output after running the evaluate command with your name and the date watermarked on it. This can also just be included in your write up.
+The model for the supplied data set. This includes: deploy.prototxt, labels.txt, mean.binaryproto, your_model.caffemodel, solver.prototxt and train_val.prototxt.
 
 
 
