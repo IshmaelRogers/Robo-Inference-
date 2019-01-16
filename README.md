@@ -83,7 +83,8 @@ PART 1: Load, Organize and Train the Data
 3. Copy and paste the following filepath into the field "Training Images":  <code> /data/mnist_numbers/train_small </code>
 4. Name the dataset so that it can be found. We've chosen: <code>Default Options Small Digits Dataset</code>
 5. Click create. From here DIGITS will create a dataset from the folder.The *train_small folder contains 10 subfolders one for each class (Handwritten numnbers from zero to 9)
-6. Explore the data by selecting "Explore the db" 
+6. Explore the data by selecting "Explore the db"
+6.1 From the home screen, the "Models" tab will be pre-selected. Click "Images" under "New Model" and select "Classification",
 7. Navigate to the tab where DIGITS is still open and retunr to the main screen by clicking DIGITS on the top left of the screen. 
 8. Choose the dataset we just created. (Default Options Small Digits Dataset)
 9. Set epoch to 5 (epoch is one trip through the entire training datase. It is how long we want to train the dataset)
