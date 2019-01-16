@@ -764,7 +764,7 @@ WORKSPACE
 
 See Udacity Nanodegree until I configure for the Jetson TX 2
 
-PROJECT
+PROJECT STEPS
 
 1) Using the supplied data in the digits image, create a network that achieves at least 75 percent accuracy and an inference time of less than 10 ms. This can be done by running the evaluate command. Be sure to take a screenshot of the results and add the date and your name to the image.
 
@@ -781,6 +781,47 @@ A photo of your terminal output after running the evaluate command with your nam
 The model for the supplied data set. This includes: deploy.prototxt, labels.txt, mean.binaryproto, your_model.caffemodel, solver.prototxt and train_val.prototxt.
 
 
+PROJECT RUBRIC 
 
+Basic Requirements
+---
+* your write up (PDF format)
+* any supporting images (including sample images of the items you are classifying, charts, graphs, etc.)
+* your trained model for the supplied data set.
+
+
+For the submission of your trained models include the following files in separate folders:
+
+* deploy.prototxt
+* labels.txt
+* mean.binaryproto
+* your_model.caffemodel
+* solver.prototxt
+* train_val.prototxt.
+
+Also included, a photo of the evaluate command output as a screenshot with your name annotated on it.
+
+watermarking tool [https://www.watermarquee.com]
+
+Numerical Requirements 
+---
+
+* A network of your choice must be trained on the supplied data set and must fall below the required inference time of 10 ms on the supplied workspace.
+* A network of your choice must be trained on the supplied data set and must surpass the required accuracy of 75%.
+
+Write up requirements
+---
+
+Include a full write up with the following sections:
+
+* Abstract
+* Introduction
+* Background / Formulation
+* Data Acquisition
+* Results
+* Discussion
+* Future Work.
+
+Include supporting images where appropriate. All images, charts, tables, etc. must be watermarked in the report.
 
 
