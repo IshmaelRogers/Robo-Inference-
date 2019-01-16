@@ -6,15 +6,15 @@ Kaggle https://www.kaggle.com/datasets
 UCI: https://archive.ics.uci.edu/ml/datasets.html
 [MNIST](http://yann.lecun.com/exdb/mnist/)
 
-[image1]: inference_overview
-[image2]: training_graph
-[image3]: inference 
-[image4]: training_graph2
-[image5]: newClassModel
-[image6]: metricsTable
-[image7]: speedvsaccuracy
-[image8]: tx1vstx2
-[image9]: sw_upgrades
+[image1]: ./images/inference_overview.png
+[image2]: ./images/training_graph.png
+[image3]: ./images/inference.png
+[image4]: ./images/training_graph2.png
+[image5]: ./images/newClassModel.png
+[image6]: ./images/metricsTable.png
+[image7]: ./images/speedvsaccuracy.png
+[image8]: ./images/tx1vstx2.png
+[image9]: ./images/sw_upgrades.png
 
 Inference development 
 --
