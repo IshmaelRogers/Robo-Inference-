@@ -108,7 +108,8 @@ The orange curve is the inverse of that loss (the difference between predicted a
 PART 2: Testing trained networks 
 ---
 Classify a single instance of new data
-1. Type in this file path --> /data/mnist_numbers/train_small
+1. Type in this file path --> /data/mnist_numbers/test_small/2/img_4415.png
+2. Select classify now
 2. Name dataset so it can be found later. our name --> Default Options Small Digits Dataset
 3. Press Create. DIGITS is now creating a data se
 
@@ -387,6 +388,8 @@ Layer characteristics
   
 # 5. Deploying models
 
+
+
 # 6. Lab: Nvidia Development 
 
 # Inferencing applications in robotics
@@ -501,7 +504,7 @@ Steps:
 
 1. Start DIGITS server by entering the command ```digits``` into a terminal 
 2. From another terminal run ```print_connection.sh``` to get the link for the DIGITS GUI. Keep this script running to keep the workspace active if a network is being trained. 
-3. Add dataset into DIGITS (/data/P1_data
+3. Add dataset into DIGITS (/data/P1_data)
 4. Choose a training model 
 5. Test the trained model by running the ``` evaluate``` in another terminal with the DIGITS server still running (only after the model is done being trained). The job id will be requested
 6. 
