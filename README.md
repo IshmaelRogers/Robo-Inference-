@@ -6,6 +6,8 @@ Kaggle https://www.kaggle.com/datasets
 UCI: https://archive.ics.uci.edu/ml/datasets.html
 [MNIST](http://yann.lecun.com/exdb/mnist/)
 
+https://github.com/udacity/deep-learning-v2-pytorch
+
 [image1]: ./IMAGES/inference_overview.png
 [image2]: ./IMAGES/training_graph.png
 [image3]: ./IMAGES/inference.png
